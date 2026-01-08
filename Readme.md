@@ -1,6 +1,6 @@
-# CENTROID // NEON OVERDRIVE (v2.4)
+# CENTROID // NEON OVERDRIVE (v1.0)
 
-![Project Banner](https://img.shields.io/badge/STATUS-OPERATIONAL-ccff00?style=for-the-badge&labelColor=000000) ![Version](https://img.shields.io/badge/VERSION-2.4-00ffaa?style=for-the-badge&labelColor=000000)
+![Project Banner](https://img.shields.io/badge/STATUS-OPERATIONAL-ccff00?style=for-the-badge&labelColor=000000) ![Version](https://img.shields.io/badge/VERSION-1.0-00ffaa?style=for-the-badge&labelColor=000000)
 
 **CENTROID** is a high-velocity, browser-based color quantization engine designed for designers and developers. It uses **K-Means Clustering (Machine Learning)** to extract the dominant color palette from any image and analyzes it for WCAG accessibility compliance.
 
