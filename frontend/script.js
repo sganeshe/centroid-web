@@ -79,8 +79,23 @@ async function uploadAndAnalyze(file) {
     loader.classList.remove('hidden');
     paletteGrid.innerHTML = '';
     exportBtn.classList.add('disabled'); exportBtn.disabled = true;
-    codeBtn.classList.add('disabled'); codeBtn.disabled = true;
+    codeBtn.classList.add('disabled'); codeBtn.disabled = true;  
     resultsArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const loadingText = document.querySelector('.loading-text');
+    loadingText.innerText = "CALCULATING_CONTRAST_RATIOS...";
+    loadingText.style.color = "var(--volt)";
+
+    const statusDot = document.querySelector('.status-dot');
+    const statusText = document.querySelector('.status-indicator');
+
+    const slowResponseTimer = setTimeout(() => {
+        loadingText.innerText = "SERVER_SLEEP_DETECTED // WAKING_UP_NEURAL_ENGINE... (PLEASE WAIT 30s)";
+        loadingText.style.color = "#ffaa00"; 
+        
+        statusDot.style.background = "#ffaa00";
+        statusDot.style.boxShadow = "0 0 10px #ffaa00";
+        statusText.innerHTML = '<span class="status-dot" style="background:#ffaa00; box-shadow:0 0 10px #ffaa00"></span> WAKING SERVER...';
+    }, 3000);
 
     const formData = new FormData();
     formData.append('file', file);
@@ -88,15 +103,31 @@ async function uploadAndAnalyze(file) {
 
     try {
         const response = await fetch(API_URL, { method: 'POST', body: formData });
+        
+        clearTimeout(slowResponseTimer);
+        
+        if (!response.ok) throw new Error("Server Error");
+
         const data = await response.json();
+        
         loader.classList.add('hidden');
         renderDataCards(data.palette);
+        
         exportBtn.classList.remove('disabled'); exportBtn.disabled = false;
         codeBtn.classList.remove('disabled'); codeBtn.disabled = false;
+
+        statusDot.style.background = "var(--volt)";
+        statusDot.style.boxShadow = "0 0 10px var(--volt)";
+        statusText.innerHTML = '<span class="status-dot"></span> SYSTEM READY';
+        
     } catch (err) {
+        clearTimeout(slowResponseTimer);
         console.error(err);
-        document.querySelector('.loading-text').innerText = "SYSTEM_ERROR // CONNECTION_LOST";
-        document.querySelector('.loading-text').style.color = "red";
+        loadingText.innerText = "SYSTEM_ERROR // CONNECTION_LOST";
+        loadingText.style.color = "var(--danger)";
+        
+        statusDot.style.background = "var(--danger)";
+        statusText.innerHTML = '<span class="status-dot" style="background:var(--danger)"></span> OFFLINE';
     }
 }
 
