@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // --- CONFIG ---
-const API_URL = "http://127.0.0.1:8000/analyze"; 
+const API_URL = "https://centroid-backend.onrender.com/analyze"; 
 const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');
 const slider = document.getElementById('color-slider');
