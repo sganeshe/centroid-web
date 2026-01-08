@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CENTROID // OVERDRIVE v1.0</title>
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Unbounded:wght@500;900&display=swap" rel="stylesheet">
+</head>
+<body class="locked">
+
+    <div id="boot-screen">
+        <div class="boot-container">
+            <div class="decrypt-text" id="decrypt-target" data-value="CENTROID.EXE">____________</div>
+            <div class="boot-terminal">
+                <span class="boot-line">> SYSTEM_BOOT_SEQUENCE_INIT</span>
+                <span class="boot-line" style="animation-delay: 0.5s">> BYPASSING_FIREWALL... [OK]</span>
+                <span class="boot-line" style="animation-delay: 1.2s">> ESTABLISHING_NEURAL_LINK...</span>
+            </div>
+            <div class="boot-bar"><div class="boot-fill"></div></div>
+        </div>
+    </div>
+
+    <div class="cyber-grid"></div>
+    <div class="vignette"></div>
+
+    <div class="hud-sidebar hud-left">
+        <div class="hud-text-vert">SYS_DIAGNOSTIC</div>
+        <div class="hud-line"></div>
+        <div class="hud-bar"></div>
+        <div class="hud-bar" style="animation-delay: 0.5s"></div>
+        <div class="hud-line"></div>
+        <div style="font-size: 10px;">WCAG_2.1</div>
+    </div>
+
+    <div class="hud-sidebar hud-right">
+        <div style="font-size: 10px;">NET_OK</div>
+        <div class="hud-line"></div>
+        <div class="hud-bar" style="animation-delay: 1s"></div>
+        <div class="hud-bar" style="animation-delay: 1.5s"></div>
+        <div class="hud-line"></div>
+        <div class="hud-text-vert">CODE_GEN_ACTIVE</div>
+    </div>
+
+    <nav>
+        <div class="logo">CENTROID<span class="dot">.</span>EXE</div>
+        <div class="status-indicator"><span class="status-dot"></span> SYSTEM READY</div>
+    </nav>
+
+    <main>
+        <header>
+            <h1 class="hero-title">
+                <div class="line">EXTRACT THE</div>
+                <div class="line neon-text"><span id="dynamic-text"></span><span class="cursor"></span></div>
+            </h1>
+        </header>
+
+        <div class="controls-bar">
+            <div class="control-group">
+                <label>CLUSTER_DENSITY [ <span id="density-val" style="color:var(--volt)">5</span> ]</label>
+                <input type="range" id="color-slider" min="2" max="10" value="5" class="cyber-slider">
+            </div>
+            <div class="btn-group">
+                <button id="btn-code" class="cyber-btn disabled" disabled>[ COPY_THEME_JS ]</button>
+                <button id="btn-export" class="cyber-btn disabled" disabled>[ EXPORT_PNG ]</button>
+            </div>
+        </div>
+
+        <div class="interaction-zone" id="drop-zone">
+            <input type="file" id="file-input" hidden accept="image/*">
+            <div class="upload-content">
+                <div class="scanner-line"></div>
+                <h3>INITIALIZE UPLOAD</h3>
+                <div class="meta-text">DRAG_DROP // JPG_PNG_WEBP</div>
+            </div>
+            <img id="preview-img" class="hidden">
+        </div>
+
+        <div id="results-area" class="results-container hidden">
+            <div id="loader" class="loader hidden">
+                <div class="loading-bar"><div class="loading-fill"></div></div>
+                <div class="loading-text">CALCULATING_CONTRAST_RATIOS...</div>
+            </div>
+            <div id="palette-grid" class="palette-grid"></div>
+        </div>
+
+        <footer>
+            <div class="footer-separator"></div>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <span class="footer-label">OPERATOR</span>
+                    <span class="footer-val">S. GANESHE</span>
+                </div>
+                
+                <div class="footer-col links-col">
+                    <a href="https://github.com/sganeshe" target="_blank" class="cyber-link">[ GITHUB_COM ]</a>
+                    <a href="https://www.linkedin.com/in/saumyaganeshe/" target="_blank" class="cyber-link">[ LINKEDIN_NET ]</a>
+                    <a href="https://sganeshe.live/" target="_blank" class="cyber-link">[ PORTFOLIO_DB ]</a>
+                </div>
+
+                <div class="footer-col right-align">
+                    <span class="footer-label">VERSION</span>
+                    <span class="footer-val">BUILD_1.0.0</span>
+                </div>
+            </div>
+            <div class="footer-copy">© 2026 CENTROID SYSTEMS // ALL RIGHTS RESERVED</div>
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

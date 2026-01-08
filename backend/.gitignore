@@ -1,0 +1,70 @@
+# --- PYTHON ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / Packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.env
+.venv
+pip-selfcheck.json
+
+# --- FASTAPI / BACKEND ---
+# SQLite database (if you add one later)
+*.db
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# --- IDE / EDITOR SETTINGS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- FRONTEND (If you add node_modules later) ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# --- PROJECT SPECIFIC ---
+# Don't track uploaded user images or generated tests
+backend/uploads/
+wcag_fail_test.png
+centroid_schematic.png
+
+# --- TESTING ---
+.coverage
+htmlcov/
+.pytest_cache/

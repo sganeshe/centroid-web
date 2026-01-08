@@ -1,0 +1,211 @@
+:root {
+    --volt: #ccff00;        
+    --black: #050505;       
+    --surface: #111;        
+    --grid: rgba(204, 255, 0, 0.15);
+    --danger: #ff0055;      
+    --safe: #00ffaa;        
+    
+    --font-head: 'Unbounded', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+body {
+    background-color: var(--black);
+    color: #fff;
+    font-family: var(--font-mono);
+    margin: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+body.locked { overflow: hidden; height: 100vh; }
+
+/* --- 1. BOOT SCREEN --- */
+#boot-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--black);
+    z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    flex-direction: column;
+    transition: opacity 0.5s ease-out, visibility 0.5s;
+}
+
+#boot-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+.boot-container { text-align: center; }
+
+.decrypt-text {
+    font-family: var(--font-head);
+    font-size: 80px; font-weight: 900; color: var(--volt);
+    letter-spacing: 5px; text-shadow: 0 0 20px var(--volt);
+    margin-bottom: 20px; min-height: 100px;
+}
+
+.boot-terminal {
+    font-family: var(--font-mono); color: #444; font-size: 0.9rem;
+    display: flex; flex-direction: column; gap: 5px; align-items: center;
+}
+.boot-line { opacity: 0; animation: fadeInLog 0.1s linear forwards; }
+@keyframes fadeInLog { to { opacity: 1; } }
+
+.boot-bar { width: 300px; height: 4px; background: #111; margin: 30px auto 0; position: relative; overflow: hidden; }
+.boot-fill {
+    height: 100%; background: var(--volt); width: 0%;
+    box-shadow: 0 0 10px var(--volt);
+    animation: bootLoad 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes bootLoad { 0% { width: 0%; } 20% { width: 10%; } 40% { width: 60%; } 80% { width: 80%; } 100% { width: 100%; } }
+
+/* --- 2. BACKGROUND & HUD --- */
+.cyber-grid {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 50px 50px; background-position: center top;
+    transform: perspective(500px) rotateX(20deg) scale(1.2);
+    animation: gridMove 20s linear infinite; z-index: -2; opacity: 0.3;
+}
+.vignette {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, transparent 0%, var(--black) 90%); z-index: -1; pointer-events: none;
+}
+@keyframes gridMove { from { background-position: 0 0; } to { background-position: 0 500px; } }
+
+/* FIXED HUD */
+.hud-sidebar {
+    position: fixed; top: 100px; bottom: 0; width: 60px;
+    display: flex; flex-direction: column; justify-content: flex-start; align-items: center; padding-top: 150px;
+    z-index: 0; pointer-events: none; color: #333; font-size: 0.7rem; font-weight: bold;
+}
+.hud-left { left: 20px; border-right: 1px solid #222; }
+.hud-right { right: 20px; border-left: 1px solid #222; }
+.hud-line { width: 1px; height: 100px; background: #333; margin: 20px 0; }
+.hud-text-vert { writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 3px; color: var(--volt); opacity: 0.5; }
+.hud-bar { width: 4px; height: 60px; background: #222; margin: 10px 0; position: relative; overflow: hidden; }
+.hud-bar::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--volt); animation: hudScan 2s ease-in-out infinite; }
+@keyframes hudScan { 0%, 100% { transform: translateY(-100%); } 50% { transform: translateY(100%); } }
+
+/* --- 3. UI LAYOUT --- */
+nav { 
+    display: flex; justify-content: space-between; padding: 30px 50px; align-items: center; 
+    background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(5px);
+    position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #222;
+}
+.logo { font-family: var(--font-head); font-weight: 900; font-size: 1.5rem; }
+.dot { color: var(--volt); }
+.status-indicator { font-size: 0.8rem; display: flex; align-items: center; gap: 8px; color: var(--volt); }
+.status-dot { width: 8px; height: 8px; background: var(--volt); border-radius: 50%; box-shadow: 0 0 10px var(--volt); }
+
+main { max-width: 1000px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+.hero-title { font-family: var(--font-head); font-size: 4rem; line-height: 1.1; text-transform: uppercase; margin-bottom: 40px; }
+.neon-text { color: var(--volt); text-shadow: 0 0 20px rgba(204, 255, 0, 0.5); }
+.cursor { display: inline-block; background-color: var(--volt); width: 0.5em; height: 0.8em; animation: blink 1s step-end infinite; vertical-align: baseline; margin-left: 5px; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.controls-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #0f0f0f; border: 1px solid #333; padding: 20px 30px;
+    margin-bottom: 30px; border-left: 4px solid var(--volt);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; z-index: 5; flex-wrap: wrap; gap: 20px;
+}
+.control-group { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.control-group label { font-size: 0.75rem; color: #888; font-weight: bold; letter-spacing: 1px; }
+.btn-group { display: flex; gap: 15px; }
+
+.cyber-slider { -webkit-appearance: none; width: 200px; height: 4px; background: #333; outline: none; cursor: pointer; }
+.cyber-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--volt); border: 2px solid #000; box-shadow: 0 0 10px var(--volt); cursor: pointer; transition: transform 0.2s; }
+.cyber-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+.cyber-btn {
+    background: transparent; border: 1px solid var(--volt); color: var(--volt);
+    font-family: var(--font-mono); padding: 12px 20px; cursor: pointer;
+    font-weight: 800; transition: all 0.3s; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;
+}
+.cyber-btn:hover:not(:disabled) { background: var(--volt); color: #000; box-shadow: 0 0 20px var(--volt); }
+.cyber-btn.disabled { border-color: #333; color: #444; cursor: not-allowed; box-shadow: none; }
+
+.interaction-zone {
+    background: rgba(10, 10, 10, 0.8); border: 1px solid #333; height: 300px;
+    position: relative; cursor: pointer; overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.interaction-zone:hover { border-color: var(--volt); box-shadow: 0 0 30px rgba(204, 255, 0, 0.15); }
+.upload-content { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2; position: relative; transition: opacity 0.3s; }
+.scanner-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--volt); box-shadow: 0 0 15px var(--volt); opacity: 0; transition: opacity 0.3s; }
+.interaction-zone:hover .scanner-line { opacity: 1; animation: scan 1.5s ease-in-out infinite; }
+@keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+h3 { font-family: var(--font-head); font-size: 1.5rem; margin: 15px 0 0 0; }
+.meta-text { color: #555; font-size: 0.8rem; margin-top: 5px; }
+#preview-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.4; filter: grayscale(100%); transition: 0.5s; }
+.interaction-zone:hover #preview-img { filter: grayscale(0%); opacity: 0.6; }
+
+.results-container { margin-top: 60px; }
+.palette-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.data-card {
+    background: #111; border: 1px solid #333; height: 260px;
+    display: flex; flex-direction: column; position: relative; cursor: copy;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.data-card:hover { transform: translateY(-10px); border-color: #fff; z-index: 10; }
+.color-preview { flex: 1; width: 100%; position: relative; }
+.wcag-badge {
+    position: absolute; bottom: 10px; right: 10px;
+    background: rgba(0,0,0,0.8); padding: 4px 8px; font-size: 0.65rem; border: 1px solid #444;
+    display: flex; gap: 5px; align-items: center;
+}
+.wcag-dot { width: 6px; height: 6px; border-radius: 50%; }
+.wcag-dot.pass { background-color: var(--safe); box-shadow: 0 0 5px var(--safe); }
+.wcag-dot.fail { background-color: var(--danger); box-shadow: 0 0 5px var(--danger); }
+.card-info {
+    padding: 15px; border-top: 1px solid #333; display: flex; flex-direction: column; gap: 5px;
+    background: #000; text-align: left;
+}
+.hex-code { font-weight: bold; color: var(--volt); font-size: 1.1rem; }
+.perc-label { font-size: 0.75rem; color: #666; display: flex; justify-content: space-between; }
+.loader { margin: 40px auto; width: 100%; max-width: 400px; text-align: center; }
+.loading-bar { height: 4px; background: #333; width: 100%; margin-bottom: 10px; overflow: hidden; }
+.loading-fill { height: 100%; background: var(--volt); width: 0%; box-shadow: 0 0 10px var(--volt); animation: loadFill 1.5s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
+.loading-text { font-size: 0.8rem; color: var(--volt); animation: blink 0.5s infinite; }
+.hidden { display: none !important; }
+
+/* --- 4. FOOTER STYLES --- */
+footer {
+    margin-top: 100px;
+    padding-top: 40px;
+    padding-bottom: 60px;
+    border-top: 1px solid #222;
+    text-align: left;
+    font-family: var(--font-mono);
+    position: relative;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.footer-col { display: flex; flex-direction: column; gap: 10px; }
+.links-col { align-items: center; flex-direction: row; justify-content: center; gap: 30px; flex-wrap: wrap; }
+.right-align { align-items: flex-end; text-align: right; }
+
+.footer-label { font-size: 0.7rem; color: #444; font-weight: bold; letter-spacing: 1px; }
+.footer-val { font-size: 0.9rem; color: #888; }
+
+.cyber-link {
+    color: #888; text-decoration: none; transition: 0.3s; 
+    font-size: 0.8rem; letter-spacing: 1px;
+}
+.cyber-link:hover { color: var(--volt); text-shadow: 0 0 10px var(--volt); }
+
+.footer-copy {
+    text-align: center; margin-top: 40px; color: #333; font-size: 0.7rem;
+}
+
+@media (max-width: 800px) {
+    .hud-sidebar { display: none; }
+    .controls-bar { flex-direction: column; align-items: stretch; }
+    .hero-title { font-size: 2.5rem; }
+    .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+    .links-col { flex-direction: column; }
+    .right-align { align-items: center; text-align: center; }
+}
